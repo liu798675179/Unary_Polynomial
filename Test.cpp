@@ -6,11 +6,9 @@ int main() {
 	Unary_Polynomial a, b;
 	string express, express1;
 
-	while (cin >> express /*>> express1*/) {
+	while (cin >> express >> express1) {
 		a.Input(express);
-		a.Print();
-		a.Clear();
-		/*b.Input(express1);
+		b.Input(express1);
 
 		auto c = a + b;
 		auto d = a - b;
@@ -23,7 +21,7 @@ int main() {
 		a.Clear();
 		b.Clear();
 		c.Clear();
-		d.Clear();*/
+		d.Clear();
 	}
 
 	return 0;
