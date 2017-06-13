@@ -37,30 +37,38 @@ private:
 };
 
 inline void Unary_Polynomial::Input(const std::string &express) {
-	std::regex pat_regex("\\+?(\\-?[[:digit:]]+)x\\^(\\-?[[:digit:]]+)|\\+?(\\-?[[:digit:]]+)x|\\+?(\\-?[[:digit:]]+)|\\+?(\\-?x)");
+	std::regex pat_regex("\\+?(\\-?[[:digit:]]+)x\\^(\\-?[[:digit:]]+)|\\+?(\\-?x)\\^(\\-?[[:digit:]]+)|\\+?(\\-?[[:digit:]]+)x|\\+?(\\-?[[:digit:]]+)|\\+?(\\-?x)");
 
 	for (std::sregex_iterator it(express.begin(), express.end(), pat_regex), end_it; it != end_it; ++it) {
-		std::cout << it->str(0) << std::endl;
-		std::cout << " 1: " << it->str(1) << " 2: " << it->str(2) << " 3: " << it->str(3) << " 4: " << it->str(4) << " 5: " << it->str(5) << std::endl;
+		//std::cout << it->str(0) << std::endl;
+		//std::cout << " 1: " << it->str(1) << " 2: " << it->str(2) << " 3: " << it->str(3) << " 4: " << it->str(4) << " 5: " << it->str(5) << " 6: " << it->str(6) << " 7: " << it->str(7) << std::endl;
 
 		if(it->str(1) != "" && it->str(2) != "") {
 			auto co = stoi(it->str(1));
 			auto po = stoi(it->str(2));
 			Insert(co, po);
 		}
-		if(it->str(3) != "") {
-			auto co = stoi(it->str(3));
+		if(it->str(4) != "") {
+			auto co = 1;
+			if(it->str(3) == "-x") {
+				co = -1;
+			}
+			auto po = stoi(it->str(4));
+			Insert(co, po);
+		}
+		if(it->str(5) != "") {
+			auto co = stoi(it->str(5));
 			auto po = 1;
 			Insert(co, po);
 		}
-		if(it->str(4) != "") {
-			auto co = stoi(it->str(4));
+		if(it->str(6) != "") {
+			auto co = stoi(it->str(6));
 			auto po = 0;
 			Insert(co, po);
 		}
-		if (it->str(5) != "") {
+		if (it->str(7) != "") {
 			auto co = 1;
-			if (it->str(5) == "-x") {
+			if (it->str(7) == "-x") {
 				co = -1;
 			}
 			auto po = 1;
@@ -96,8 +104,14 @@ inline void Unary_Polynomial::Print() {
 			if(i->coefficient != 0 && i->power == 0) {
 				std::cout << i->coefficient;
 			}
-			if (i->power != 0 && i->power != 1 && i->coefficient != 0) {
+			if (i->power != 0 && i->power != 1 && i->coefficient != 0 && i->coefficient != 1 && i->coefficient != -1) {
 				std::cout << i->coefficient << "x^" << i->power;
+			}
+			if (i->power != 0 && i->power != 1 && i->coefficient != 0 && (i->coefficient == 1 || i->coefficient == -1)) {
+				if (i->coefficient == -1) {
+					std::cout << "-";
+				}
+				std::cout << "x^" << i->power;
 			}
 			if (i->power == 1 && i->coefficient != 0 && i->coefficient != 1 && i->coefficient != -1) {
 				std::cout << i->coefficient << "x";
